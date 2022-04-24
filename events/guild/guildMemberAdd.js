@@ -5,6 +5,7 @@ const IC = require('../../botconfig/internalChannels.json');
 
 module.exports = async (client, newMember) => {
 
+    let joinChannel = client.channels.cache.get(IC['first-hello']);
     let joinLog = new MessageEmbed()
     .setAuthor({name: `USER JOINED`, iconURL: newMember.displayAvatarURL()})
     .setDescription(`${newMember} ${newMember.user.tag}`)
@@ -18,12 +19,10 @@ module.exports = async (client, newMember) => {
         if(res.length > 0){
             con.query(`UPDATE visits SET visits=visits+1 WHERE user='${newMember.id}'`);
             joinLog.addField(`PREVIOUS VISITS`, `\`${res[0].visits + 1}\``)
+            joinChannel.send({embeds: [joinLog]});
         } else {
-            con.query(`INSERT INTO visits VALUES ('${newMember.id}', '0')`);
-            joinLog.addField(`PREVIOUS VISITS`, `\`N/A\``)
+            con.query(`INSERT INTO visits VALUES ('${newMember.id}', '1')`);
+            joinChannel.send({embeds: [joinLog]});
         }
     })
-
-    let joinChannel = client.channels.cache.get(IC['first-hello']);
-    await joinChannel.send({embeds: [joinLog]});
 }

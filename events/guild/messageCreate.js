@@ -1,4 +1,5 @@
 const { MessageEmbed } = require("discord.js");
+const db = require('quick.db');
 const emojis = require("../../botconfig/emojis.json");
 const IC = require("../../botconfig/internalChannels.json");
 
@@ -31,13 +32,16 @@ module.exports = async (client, message) => {
         }
     }
     if(message.channel.id == '817022179245686874'){
+        console.log(true);
         if(message.author.bot && message.author.id == '302050872383242240'){
+            console.log(message);
             let messageEmbed = message.embeds[0];
-            if(messageEmbed.description.toLowerCase().includes("Bump done!")){
+            if(messageEmbed.description.toLowerCase().includes("bump done")){
                 let user = message.interaction.user;
                 const embed = new MessageEmbed()
-                .setDescription(`Thank you ${user.username} for bumping our server!`)
+                .setDescription(`Thank you ${user.username} for bumping our server! I will remind you in **2 hours** to bump!`)
 
+                db.set(`lastbump`, {user: user, time: Date.now()})
                 client.channels.cache.get('817022179245686874').send({embeds: [embed]});
             }
         }

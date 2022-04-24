@@ -11,11 +11,13 @@ module.exports = client => {
   try{
     change_status(client);
     ask_question(client);
+    bump_check(client);
     setInterval(()=>{
       change_status(client);
     }, 15 * 1000);
     setInterval(() => {
-      ask_question(client)
+      bump_check(client);
+      ask_question(client);
     }, 30000);
   
   } catch (e){
@@ -58,5 +60,25 @@ function ask_question(client){
     } else {
       console.log(`Time is ${moment(timeNow).format('HH:mm')}`)
     }
+  }
+}
+
+function bump_check(client){
+  var bumpUser = db.get('lastbump.user');
+  var bumpTime = db.get('lastbump.time');
+  const cooldown = 7200000;
+  if(bumpTime !== null && cooldown - (Date.now() - bumpTime) > 0){
+    var bumpChannel = client.channels.cache.get(IC.bumpChannel);
+    var guild = client.guilds.cache.get(IC.GUILD);
+    var user = guild.members.cache.get(bumpUser);
+    const embed = new MessageEmbed()
+    .setAuthor({name: `TIME TO BUMP AGAIN!`})
+    .setDescription(`Hey ${user}! It is time to boost and bump the server once again!`)
+    .setColor(`AQUA`);
+    bumpChannel.send({embeds: [embed], content: `${user}`});
+    user.send({embeds: [embed]}).catch(err => console.log(err));
+    db.delete(`lastbump.time`);
+  } else {
+    console.log(`No need to remind!`)
   }
 }
