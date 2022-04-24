@@ -38,18 +38,18 @@ module.exports = {
 		const { guild } = member;
 
         let logChannel = client.channels.cache.get(IC.logs);
-		let questionToBeAdded = options.getString("question");
+		    let questionToBeAdded = options.getString("question");
 
-        const logMsg = new MessageEmbed()
-        .setTitle(`NEW QUESTION ADDED`)
-        .setDescription(question)
-        .addField(`ADDED BY`, member)
-        .setFooter({text: emb.footertext})
+        con.query(`INSERT INTO questions (question, submitter) VALUES ('${questionToBeAdded}', '${member.user.tag}')`, function (err, res, fields){
+          const logMsg = new MessageEmbed()
+          .setTitle(`NEW QUESTION ADDED`)
+          .setDescription(`${questionToBeAdded}`)
+          .addField(`ADDED BY`, `${member}`)
+          .setFooter({text: `Question ID: ${res.insertId} | ${emb.footertext}`})
 
-        con.query(`INSERT INTO questions VALUES ('${question}', '${member.user.tag})`)
-
-        interaction.reply({embeds: [logMsg], ephemeral: true});
-        logChannel.send({embeds: [logMsg]});
+          interaction.reply({embeds: [logMsg], ephemeral: true});
+          logChannel.send({embeds: [logMsg]});
+        })
 		
     } catch (e) {
         console.log(String(e.stack).bgRed)

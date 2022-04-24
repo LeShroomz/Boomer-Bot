@@ -40,6 +40,7 @@ module.exports = {
         //let purgeCount = parseInt(options.getString("purge"));
 		let reason = options.getString("reason") || "No specific reason provided."
 		let logchannel = client.channels.cache.get(IC.logs);
+		let goodbyechannel = client.channels.cahce.get(IC.goodbye);
 		if(target.roles.highest.position < member.roles.highest.position){
 			const DMtarget = new MessageEmbed()
 			.setTitle(`YOU HAVE BEEN KICKED`)
@@ -56,7 +57,7 @@ module.exports = {
 			.setThumbnail(target.displayAvatarURL())
 			.setTimestamp()
 			.addFields(
-				{name: `TARGET`, value: `${target}\n\`${target.user.id}\``, inline: true},
+				{name: `TARGET`, value: `${target} ${target.user.tag}\n\`${target.user.id}\``, inline: true},
 				{name: `MODERATOR`, value: `${member}`, inline: true},
 				{name: `REASON`, value: reason}
 			);
@@ -69,6 +70,7 @@ module.exports = {
 			}
 
 			logchannel.send({embeds: [logmsg]});
+			goodbyechannel.send({embeds: [logmsg]});
 			interaction.reply({content: `${target} was successfully kicked for \`${reason}\``, ephemeral: true});
 		} else {
 			interaction.reply({content: `You can't punish that user, they have higher role hierarchy!`, ephemeral: true})

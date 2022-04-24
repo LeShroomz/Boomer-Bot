@@ -5,6 +5,7 @@ const settings = require("../../botconfig/settings.json");
 const IC = require('../../botconfig/internalChannels.json');
 const emojis = require('../../botconfig/emojis.json');
 const ms = require("ms");
+const db = require('quick.db');
 const con = require("../../db.js");
 module.exports = {
   name: "ask", //the command name for the Slash Command
@@ -39,24 +40,48 @@ module.exports = {
 
         let logChannel = client.channels.cache.get(IC.logs);
         let questionChannel = client.channels.cache.get(IC.questionchannel);
-		let questionToBeAsked = options.getString("question");
+		    let questionToBeAsked = options.getString("question");
+        let lastQuestionMessage = db.get(`qotd.message`);
 
-        const logMsg = new MessageEmbed()
-        .setTitle(`NEW QUESTION ASKED`)
-        .setDescription(questionToBeAsked)
-        .addField(`ASKED BY`, `${member}`)
-        .setFooter({text: emb.footertext})
-        const questionMsg = new MessageEmbed()
-        .setTitle(`${emojis.ziggsGif} Question of the Day`)
-        .setDescription(questionToBeAsked)
-        .setFooter({text: `Question asked by ${member.user.username}`, iconURL: member.displayAvatarURL()})
-        .setTimestamp();
+        if(questionToBeAsked == null){
+          con.query(`SELECT * FROM questions WHERE asked='0' ORDER BY id ASC`, function (err, res){
+            if(res.length > 0){
+              questionToBeAsked = res[0].question
+              const questionMsg = new MessageEmbed()
+              .setTitle(`${emojis.ziggsGif} Question of the Day`)
+              .setDescription(questionToBeAsked)
+              .setFooter({text: `Question asked by ${res[0].submitter}`})
+              .setTimestamp();
 
-        //con.query(`INSERT INTO questions VALUES ('${question}', '${member.user.tag})`)
+              questionChannel.send({embeds: [questionMsg]}).then(msg => {
+                if(lastQuestionMessage){
+                  questionChannel.messages.cache.get(lastQuestionMessage).unpin().catch(err => console.log(err));
+                }
+                db.set(`qotd.message`, msg.id);
+                msg.pin();
+              });
+              interaction.reply({content: `Question ID **${res[0].id}** ('*${questionToBeAsked}*') was sent to ${questionChannel}!`, ephemeral: true});
+              con.query(`UPDATE questions SET asked='1' WHERE id='${res[0].id}'`)
+            } else {
+              interaction.reply({content: `There are no questions in queue!`})
+            }
+          })
+        } else {
+          const logMsg = new MessageEmbed()
+          .setTitle(`NEW QUESTION ASKED`)
+          .setDescription(questionToBeAsked)
+          .addField(`ASKED BY`, `${member}`)
+          .setFooter({text: emb.footertext})
+          const questionMsg = new MessageEmbed()
+          .setTitle(`${emojis.ziggsGif} Question of the Day`)
+          .setDescription(questionToBeAsked)
+          .setFooter({text: `Question asked by ${member.user.tag}`})
+          .setTimestamp();
 
-        interaction.reply({content: `Your questions *${questionToBeAsked}* was sent to ${questionChannel}!`, ephemeral: true});
-        logChannel.send({embeds: [logMsg]});
-        questionChannel.send({embeds: [questionMsg]});
+          interaction.reply({content: `Your questions *${questionToBeAsked}* was sent to ${questionChannel}!`, ephemeral: true});
+          logChannel.send({embeds: [logMsg]});
+          questionChannel.send({embeds: [questionMsg]});
+        }
 		
     } catch (e) {
         console.log(String(e.stack).bgRed)
