@@ -26,6 +26,7 @@ const {
   module.exports.GetGlobalUser = GetGlobalUser;
   module.exports.parseMilliseconds = parseMilliseconds;
   module.exports.onCoolDown = onCoolDown;
+  module.exports.truncateString = truncateString;
   
   module.exports.replacemsg = replacedefaultmessages
   /**
@@ -711,5 +712,13 @@ function onCoolDown(message, command) {
       });
     } catch (e) {
       console.log(String(e.stack).bgRed)
+    }
+  }
+
+  function truncateString(string, limit){
+    if(string.length > limit){
+      return string.substring(0, limit) + "..."
+    } else {
+      return string;
     }
   }

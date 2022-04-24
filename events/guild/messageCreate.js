@@ -30,4 +30,16 @@ module.exports = async (client, message) => {
             message.react(emojis.ziggs);
         }
     }
+    if(message.channel.id == '817022179245686874'){
+        if(message.author.bot && message.author.id == '302050872383242240'){
+            let messageEmbed = message.embeds[0];
+            if(messageEmbed.description.toLowerCase().includes("Bump done!")){
+                let user = message.interaction.user;
+                const embed = new MessageEmbed()
+                .setDescription(`Thank you ${user.username} for bumping our server!`)
+
+                client.channels.cache.get('817022179245686874').send({embeds: [embed]});
+            }
+        }
+    }
 }
