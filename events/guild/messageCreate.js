@@ -42,6 +42,7 @@ module.exports = async (client, message) => {
         let defend = message.guild.members.cache.get('221913832765784064');
         if(message.mentions.has(client.user)){
             if(content.includes("hi") || content.includes("hello") || content.includes("sup") || content.includes("greetings")){
+                if(message.author.bot) return;
                 message.react(emojis.ziggsGif);
                 message.reply({content: `Hello there ${message.member}! How are you doing during this fine evening?`})
             }
