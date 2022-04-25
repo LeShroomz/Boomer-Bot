@@ -31,6 +31,7 @@ module.exports = async (client, message) => {
             message.react(emojis.ziggs);
         }
     }
+    /*
     if(message.channel.id == '817022179245686874'){
         console.log(true);
         if(message.author.bot && message.author.id == '302050872383242240'){
@@ -46,4 +47,5 @@ module.exports = async (client, message) => {
             }
         }
     }
+    */
 }

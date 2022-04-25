@@ -11,12 +11,12 @@ module.exports = client => {
   try{
     change_status(client);
     ask_question(client);
-    bump_check(client);
+    //bump_check(client);
     setInterval(()=>{
       change_status(client);
     }, 15 * 1000);
     setInterval(() => {
-      bump_check(client);
+      //bump_check(client);
       ask_question(client);
     }, 30000);
   
