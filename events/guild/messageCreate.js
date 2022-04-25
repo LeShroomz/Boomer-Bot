@@ -32,10 +32,10 @@ module.exports = async (client, message) => {
         }
     }
     if(message.channel.type != 'DM'){
-        if(message.isMemberMentioned(client.user)){
+        if(message.mentions.has(client.user)){
             if(message.content.includes("hi") || message.content.includes("hello")){
                 message.react(emojis.ziggsGif);
-                message.reply({content: `Hello there ${message.member}! How are you doing during this fine evening?`});
+                message.reply({content: `Hello there ${message.member}! How are you doing during this fine evening?`})
             }
         }
     }
