@@ -8,7 +8,6 @@ module.exports = async (client, channel) => {
     .setDescription(`Channel ${channel} \`${channel.name}\` created`)
     .setTimestamp()
     .setColor(`DARK_NAVY`)
-    .setFooter({text: `${newMessage.author.tag}`, iconURL: newMessage.member.displayAvatarURL()})
 
     client.channels.cache.get(IC.botcommands).send({embeds: [embed]});
 }
