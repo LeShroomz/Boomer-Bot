@@ -10,15 +10,11 @@ module.exports = client => {
   //client.guilds.cache.forEach(guild=>client.settings.set(guild.id, ["autoplay", "clearqueue", "forward", "loop", "jump", "loopqueue", "loopsong", "move", "pause", "resume", "removetrack", "removedupe", "restart", "rewind", "seek", "shuffle", "skip", "stop", "volume"], "djonlycmds"))
   try{
     change_status(client);
-    ask_question(client);
+    //ask_question(client);
     //bump_check(client);
     setInterval(()=>{
       change_status(client);
     }, 15 * 1000);
-    setInterval(() => {
-      //bump_check(client);
-      ask_question(client);
-    }, 30000);
   
   } catch (e){
     console.log(String(e.stack).grey.italic.dim.bgRed)
