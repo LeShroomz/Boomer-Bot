@@ -31,6 +31,14 @@ module.exports = async (client, message) => {
             message.react(emojis.ziggs);
         }
     }
+    if(message.channel.type != 'DM'){
+        if(message.isMemberMentioned(client.user)){
+            if(message.content.includes("hi") || message.content.includes("hello")){
+                message.react(emojis.ziggsGif);
+                message.reply({content: `Hello there ${message.member}! How are you doing during this fine evening?`});
+            }
+        }
+    }
     /*
     if(message.channel.id == '817022179245686874'){
         console.log(true);
