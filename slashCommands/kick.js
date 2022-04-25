@@ -40,7 +40,7 @@ module.exports = {
         //let purgeCount = parseInt(options.getString("purge"));
 		let reason = options.getString("reason") || "No specific reason provided."
 		let logchannel = client.channels.cache.get(IC.logs);
-		let goodbyechannel = client.channels.cahce.get(IC.goodbye);
+		let goodbyechannel = client.channels.cache.get(IC.goodbye);
 		if(target.roles.highest.position < member.roles.highest.position){
 			const DMtarget = new MessageEmbed()
 			.setTitle(`YOU HAVE BEEN KICKED`)
