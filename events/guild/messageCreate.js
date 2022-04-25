@@ -48,13 +48,13 @@ module.exports = async (client, message) => {
             }
         } else if(content.includes("who is") && message.mentions.has(arny)){
             message.react(emojis.ziggsGif);
-            message.reply({content: `Well ${arny.user.username} is the best person in the world of course? *Psst.. did you know that he secretly loves Pete!* :flushed:`})
+            message.reply({content: `Well ${arny.user.username} is the best person in the world of course? *Psst.. did you know that he secretly loves Pete?* :flushed:`})
         } else if(content.includes("who is") && message.mentions.has(doctor)){
             message.react(emojis.ziggsGif);
-            message.reply({content: `${doctor.user.username} is the most innocent person in the planet, and if you go horni rampart, he will execute you faster than Yone kills Yasuo...`})
+            message.reply({content: `${doctor.user.username} is the most innocent person on the planet, and if you go horni rampage, he will execute you faster than Yone kills Yasuo...`})
         } else if(content.includes("who is") && message.mentions.has(pete)){
             message.react(emojis.ziggsGif);
-            message.reply({content: `${pete.user.username} is interesting one, claims to *hate* ${arny.user.username} but in reality loves him a lot, it is love and hate relationship, right gurl? Oh yeah who Pete? Lovable little game-developer-to-be`})
+            message.reply({content: `${pete.user.username} is an interesting one; claims to *hate* ${arny.user.username} but in reality loves him a lot - it is a love/hate relationship, right gurl? Oh yeah who is Pete? Lovable little game-developer-to-be`})
         } else if(content.includes("who is") && message.mentions.has(zach)){
             message.react(emojis.ziggsGif);
             message.reply({content: `Don't step on ${zach.user.username} toes, or you will find yourself sleeping on the couch, outside, in the rain, without clothes.. *and robbed* :sunglasses:`})
@@ -66,7 +66,7 @@ module.exports = async (client, message) => {
             message.reply({content: `**KWAAK**, I mean, just a person who wants you to be his pillow! :heart:`})
         } else if(content.includes("who is") && message.mentions.has(defend)){
             message.react(emojis.ziggsGif);
-            message.reply({content: `I don't dare to say much as he might smite me off the server. He is the server daddy, big twink who can come across little quiet. ||*Just check his Reddit...*||`})
+            message.reply({content: `I don't dare to say much as he might smite me off the server. He is the server daddy, big twink who can come across a little quiet. ||*Just check his Reddit...*||`})
         }
     }
     /*
