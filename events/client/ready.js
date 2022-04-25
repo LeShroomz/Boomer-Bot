@@ -26,7 +26,7 @@ module.exports = client => {
 }
 
 function ask_question(client){
-  var timeNow = new Date().getHours();
+  var timeNow = Date.now().getHours();
   var dayNow = new Date().getDay();
   var lastDay = db.get(`qotd.lastday`);
 
