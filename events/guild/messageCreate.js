@@ -32,11 +32,40 @@ module.exports = async (client, message) => {
         }
     }
     if(message.channel.type != 'DM'){
+        let content = message.content.toLowerCase()
+        let arny = message.guild.members.cache.get('861203265178173470');
+        let doctor = message.guild.members.cache.get('144982644764049418');
+        let pete = message.guild.members.cache.get('372740660736032768');
+        let zach = message.guild.members.cache.get('355657266575179776');
+        let aiko = message.guild.members.cache.get('618686265830801424');
+        let ducky = message.guild.members.cache.get('706822649606701086');
+        let defend = message.guild.members.cache.get('221913832765784064');
         if(message.mentions.has(client.user)){
-            if(message.content.includes("hi") || message.content.includes("hello")){
+            if(content.includes("hi") || content.includes("hello") || content.includes("sup") || content.includes("greetings")){
                 message.react(emojis.ziggsGif);
                 message.reply({content: `Hello there ${message.member}! How are you doing during this fine evening?`})
             }
+        } else if(content.includes("who is") && message.mentions.has(arny)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `Well ${arny.user.username} is the best person in the world of course? *Psst.. did you know that he secretly loves Pete!* :flushed:`})
+        } else if(content.includes("who is") && message.mentions.has(doctor)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `${doctor.user.username} is the most innocent person in the planet, and if you go horni rampart, he will execute you faster than Yone kills Yasuo...`})
+        } else if(content.includes("who is") && message.mentions.has(pete)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `${pete.user.username} is interesting one, claims to *hate* ${arny.user.username} but in reality loves him a lot, it is love and hate relationship, right gurl? Oh yeah who Pete? Lovable little game-developer-to-be`})
+        } else if(content.includes("who is") && message.mentions.has(zach)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `Don't step on ${zach.user.username} toes, or you will find yourself sleeping on the couch, outside, in the rain, without clothes.. *and robbed* :sunglasses:`})
+        } else if(content.includes("who is") && message.mentions.has(aiko)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `MOMMY :weary: :hot_face:`})
+        } else if(content.includes("who is") && message.mentions.has(ducky)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `**KWAAK**, I mean, just a person who wants you to be his pillow! :heart:`})
+        } else if(content.includes("who is") && message.mentions.has(defend)){
+            message.react(emojis.ziggsGif);
+            message.reply({content: `I don't dare to say much as he might smite me off the server. He is the server daddy, big twink who can come across little quiet. ||*Just check his Reddit...*||`})
         }
     }
     /*
