@@ -26,7 +26,8 @@ module.exports = client => {
 }
 
 function ask_question(client){
-  var timeNow = Date.now().getHours();
+  var date = new Date();
+  var timeNow = date.getUTCHours();
   var dayNow = new Date().getDay();
   var lastDay = db.get(`qotd.lastday`);
 
@@ -60,6 +61,8 @@ function ask_question(client){
     } else {
       console.log(`Time is ${moment(timeNow).format('HH:mm')}`)
     }
+  } else {
+    console.log(`Time is ${moment(timeNow).format('HH:mm')}`)
   }
 }
 
