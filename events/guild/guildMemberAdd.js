@@ -16,6 +16,7 @@ module.exports = async (client, newMember) => {
     )
 
     con.query(`SELECT * FROM visits WHERE user='${newMember.id}'`, function(err, res){
+        if(err != null) return console.log(err);
         if(res.length > 0){
             con.query(`UPDATE visits SET visits=visits+1 WHERE user='${newMember.id}'`);
             joinLog.addField(`PREVIOUS VISITS`, `\`${res[0].visits + 1}\``)
