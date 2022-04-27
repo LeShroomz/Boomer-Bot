@@ -47,7 +47,7 @@ module.exports = {
         .setImage(`https://media2.giphy.com/media/q7okuo9cVTiHVsueiJ/giphy.gif`)
         const welcomeMsg = new MessageEmbed()
         .setTitle(`A NEW CHALLENGER HAS ARRIVED! <:Shen_Shy:871935496778047498>`)
-        .setDescription(`Welcome to **Rainbow Summoners [EUW]**, ${target}!\n\n**Don't know where to start?**\n🔺 Check out <#774556617504980993> & <#871109213848489994>\n🔺 Pick some roles <#734787513293471896>\n🔺 Tell us about yourself in <#812239615070306304>`)
+        .setDescription(`Welcome to **Rainbow Summoners [EUW]**, ${target}!\n\n**Don't know where to start?**\n\`=\` Check out <#774556617504980993> & <#871109213848489994>\n\`=\` Pick some roles <#734787513293471896>\n\`=\` Tell us about yourself in <#812239615070306304>`)
         .setImage(`https://media2.giphy.com/media/q7okuo9cVTiHVsueiJ/giphy.gif`)
         .setFooter({text: `Every step; a new journey...`})
         .setColor(`DARK_PURPLE`)

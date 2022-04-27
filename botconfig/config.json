@@ -6,7 +6,12 @@
         "Folder": "qotd",
         "CmdName": "qotd",
         "CmdDescription": "Question of the day controls"
-    }
+      },
+      {
+        "Folder": "notes",
+        "CmdName": "notes",
+        "CmdDescription": "Add/Edit/View moderational notes"
+      }
     ]
   }
   
