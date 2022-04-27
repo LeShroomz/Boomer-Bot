@@ -38,6 +38,7 @@ module.exports = {
 		const { guild } = member;
 
         let logChannel = client.channels.cache.get(IC.logs);
+        let watchChannel = client.channels.cache.get(IC.watchchannel);
         let noteID = options.getInteger("user")
 
         con.query(`SELECT * FROM notes WHERE id='${noteID}'`, function (err, res){
@@ -51,6 +52,7 @@ module.exports = {
 
                 interaction.reply({content: `You have **successfully** deleted note by ID ${noteID}`})
                 logChannel.send({embeds: [logMsg]});
+                watchChannel.send({embeds: [logMsg]});
             } else {
                 const noNotes = new MessageEmbed().setDescription(`Could not find any notes by ID ${noteID}!`).setColor(`DARK_RED`);
                 interaction.reply({embeds: [noNotes], ephemeral: true})
