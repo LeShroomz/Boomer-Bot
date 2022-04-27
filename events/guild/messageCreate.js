@@ -40,13 +40,7 @@ module.exports = async (client, message) => {
         let aiko = message.guild.members.cache.get('618686265830801424');
         let ducky = message.guild.members.cache.get('706822649606701086');
         let defend = message.guild.members.cache.get('221913832765784064');
-        if(message.mentions.has(client.user)){
-            if(content.includes("hi") || content.includes("hello") || content.includes("sup") || content.includes("greetings")){
-                if(message.author.bot) return;
-                message.react(emojis.ziggsGif);
-                message.reply({content: `Hello there ${message.member}! How are you doing during this fine evening?`})
-            }
-        } else if(content.includes("who is") && message.mentions.has(arny)){
+        if(content.includes("who is") && message.mentions.has(arny)){
             message.react(emojis.ziggsGif);
             message.reply({content: `Well ${arny.user.username} is the best person in the world of course? *Psst.. did you know that he secretly loves Pete?* :flushed:`})
         } else if(content.includes("who is") && message.mentions.has(doctor)){
