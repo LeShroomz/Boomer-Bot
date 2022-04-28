@@ -20,7 +20,9 @@ module.exports = async (client, newMember) => {
     let instructions = new MessageEmbed()
     .setAuthor({name: `Welcome ${newMember.user.username}!`, iconURL: newMember.displayAvatarURL()})
     .setDescription(`Please answer the questions above to gain access to the server! Feel free to ask any questions that you might have ${emojis.ziggs}`)
-    .setFooter({text: })
+    .setFooter({text: emb.footertext})
+    .setTimestamp();
+    client.channels.cache.get(IC.accesschannel).send({content: `${newMember}`, embeds: [instructions]});
 
     con.query(`SELECT * FROM visits WHERE user='${newMember.id}'`, function(err, res){
         if(err != null) return console.log(err);
