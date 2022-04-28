@@ -39,7 +39,7 @@ module.exports = {
 
         let logChannel = client.channels.cache.get(IC.logs);
         let watchChannel = client.channels.cache.get(IC.watchchannel);
-        let noteID = options.getInteger("user")
+        let noteID = options.getInteger("id")
 
         con.query(`SELECT * FROM notes WHERE id='${noteID}'`, function (err, res){
             if(res.length > 0){
