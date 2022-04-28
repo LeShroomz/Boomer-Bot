@@ -50,6 +50,8 @@ module.exports = {
                 .setColor(`DARK_RED`)
                 .setFooter({text: emb.footertext, iconURL: client.user.displayAvatarURL()})
 
+                con.query(`DELETE FROM notes WHERE id='${noteID}'`);
+
                 interaction.reply({content: `You have **successfully** deleted note by ID ${noteID}`})
                 logChannel.send({embeds: [logMsg]});
                 watchChannel.send({embeds: [logMsg]});
