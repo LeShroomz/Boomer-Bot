@@ -5,6 +5,7 @@ const IC = require("../../botconfig/internalChannels.json");
 module.exports = async (client, message) => {
 
     if(message.author && message.author.bot) return;
+    if(message.channel.id === '838321823966953472') return;
 
     if(message.attachments.size > 0){
         if (message.attachments.every(attachIsImage)){
