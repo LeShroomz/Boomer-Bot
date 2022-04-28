@@ -11,6 +11,11 @@
         "Folder": "notes",
         "CmdName": "notes",
         "CmdDescription": "Add/Edit/View moderational notes"
+      },
+      {
+        "Folder": "dev",
+        "CmdName": "dev",
+        "CmdDescription": "Boomer dev commands"
       }
     ]
   }
