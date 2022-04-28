@@ -5,7 +5,7 @@ const IC = require("../../botconfig/internalChannels.json");
 module.exports = async (client, oldMessage, newMessage) => {
 
     if(oldMessage.author.bot) return;
-    if(message.channel.id === '838321823966953472') return;
+    if(oldMessage.channel.id === '838321823966953472') return;
     if(oldMessage.content != newMessage.content){
         let oldContent = truncateString(oldMessage.content, 1020);
         let newContent = truncateString(newMessage.content, 1020);
