@@ -10,10 +10,11 @@ module.exports = client => {
   //client.guilds.cache.forEach(guild=>client.settings.set(guild.id, ["autoplay", "clearqueue", "forward", "loop", "jump", "loopqueue", "loopsong", "move", "pause", "resume", "removetrack", "removedupe", "restart", "rewind", "seek", "shuffle", "skip", "stop", "volume"], "djonlycmds"))
   try{
     //change_status(client);
-    //ask_question(client);
+    ask_question(client);
     //bump_check(client);
     setInterval(()=>{
       change_status(client);
+      ask_question(client)
     }, 15 * 1000);
   
   } catch (e){
@@ -22,44 +23,34 @@ module.exports = client => {
 }
 
 function ask_question(client){
-  var date = new Date();
-  var timeNow = date.getUTCHours();
-  var dayNow = new Date().getDay();
-  var lastDay = db.get(`qotd.lastday`);
+  var lastQuestion = db.get(`qotdLAST`);
+  const cooldown = 86400000;
+  if(lastQuestion !== null && cooldown - (Date.now() - lastQuestion) > 0) return;
+  db.set(`qotdLAST`, Date.now())
+  con.query(`SELECT * FROM questions WHERE asked='0' ORDER BY id ASC`, function (err, res){
+    if(res.length > 0){
+      let questionChannel = client.channels.cache.get(IC.questionchannel);
+      let lastQuestionMessage = db.get(`qotd.message`);
+      questionToBeAsked = res[0].question
+      const questionMsg = new MessageEmbed()
+      .setTitle(`${emojis.ziggsGif} Question of the Day`)
+      .setDescription(questionToBeAsked)
+      .setFooter({text: `Question asked by ${res[0].submitter}`})
+      .setTimestamp();
 
-  if(dayNow != lastDay){
-    if(timeNow == 14){
-      db.set(`qotd.lastday`, dayNow);
-      con.query(`SELECT * FROM questions WHERE asked='0' ORDER BY id ASC`, function (err, res){
-        if(res.length > 0){
-          let questionChannel = client.channels.cache.get(IC.questionchannel);
-          let lastQuestionMessage = db.get(`qotd.message`);
-          questionToBeAsked = res[0].question
-          const questionMsg = new MessageEmbed()
-          .setTitle(`${emojis.ziggsGif} Question of the Day`)
-          .setDescription(questionToBeAsked)
-          .setFooter({text: `Question asked by ${res[0].submitter}`})
-          .setTimestamp();
-
-          questionChannel.send({embeds: [questionMsg]}).then(msg => {
-            if(lastQuestionMessage){
-              let lastQuestion = questionChannel.messages.cache.get(lastQuestionMessage)
-              if(lastQuestion){
-                lastQuestion.unpin()
-              }
-            }
-            db.set(`qotd.message`, msg.id);
-            msg.pin();
-          });
-          con.query(`UPDATE questions SET asked='1' WHERE id='${res[0].id}'`)
+      questionChannel.send({embeds: [questionMsg]}).then(msg => {
+        if(lastQuestionMessage){
+          let lastQuestion = questionChannel.messages.cache.get(lastQuestionMessage)
+          if(lastQuestion){
+            lastQuestion.unpin()
+          }
         }
+        db.set(`qotd.message`, msg.id);
+        msg.pin();
       });
-    } else {
-      console.log(`Time is ${moment(timeNow).format('HH:mm')}`)
+      con.query(`UPDATE questions SET asked='1' WHERE id='${res[0].id}'`)
     }
-  } else {
-    console.log(`Time is ${moment(timeNow).format('HH:mm')}`)
-  }
+  });
 }
 
 function bump_check(client){

@@ -62,6 +62,7 @@ module.exports = {
               });
               interaction.reply({content: `Question ID **${res[0].id}** ('*${questionToBeAsked}*') was sent to ${questionChannel}!`, ephemeral: true});
               con.query(`UPDATE questions SET asked='1' WHERE id='${res[0].id}'`)
+              db.set(`qotdLAST`, Date.now())
             } else {
               interaction.reply({content: `There are no questions in queue!`})
             }
@@ -79,7 +80,14 @@ module.exports = {
           .setTimestamp();
 
           interaction.reply({content: `Your questions *${questionToBeAsked}* was sent to ${questionChannel}!`, ephemeral: true});
-          logChannel.send({embeds: [logMsg]});
+          db.set(`qotdLAST`, Date.now())
+          logChannel.send({embeds: [logMsg]}).then(msg => {
+            if(lastQuestionMessage){
+              questionChannel.messages.cache.get(lastQuestionMessage).unpin().catch(err => console.log(err));
+            }
+            db.set(`qotd.message`, msg.id);
+            msg.pin();
+          });;
           questionChannel.send({embeds: [questionMsg]});
         }
 		
