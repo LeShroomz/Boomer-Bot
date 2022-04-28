@@ -14,8 +14,8 @@ module.exports = {
   requiredroles: ['877928758621896834', '966653804734971934', '820648593597530142', '875892036270718996'], //Only allow specific Users with a Role to execute a Command [OPTIONAL]
   alloweduserids: [], //Only allow specific Users to execute a Command [OPTIONAL]
   options: [ //OPTIONAL OPTIONS, make the array empty / dont add this option if you don't need options!	
-		{"Integer": {name: "hours", description: "Adding hours", required: false}},
-        {"Integer": {name: "message_id", description: "Message id of last QOTD", require: false}}
+		{"Integer": { name: "hours", description: "Adding hours", required: false}},
+        {"Integer": { name: "message_id", description: "Message id of last QOTD", required: false}}
 		//{"StringChoices": {name: "duration", description: "How long should we timeout the user?", required: true, choices: [["1 minute", "60"], ["5 minutes", "300"], ["10 minutes", "600"], ["1 hour", "3600"], ["24 hours", "86400"]]}},
 		//{"String": {name: "notes", description: "What should the note say?", required: true}}
 	//INFORMATIONS! You can add Options, but mind that the NAME MUST BE LOWERCASED! AND NO SPACES!!!, for the CHOCIES you need to add a array of arrays; [ ["",""] , ["",""] ] 
