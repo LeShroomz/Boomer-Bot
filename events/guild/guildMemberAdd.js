@@ -1,7 +1,9 @@
 const { MessageEmbed } = require('discord.js');
+const emojis = require('../../botconfig/emojis.json')
 const moment = require('moment');
 const con = require('../../db.js');
 const IC = require('../../botconfig/internalChannels.json');
+const emb = require('../../botconfig/embed.json');
 
 module.exports = async (client, newMember) => {
 
@@ -14,6 +16,11 @@ module.exports = async (client, newMember) => {
         {name: `ID`, value: `${newMember.id}`, inline: true},
         {name: `ACCOUNT CREATED`, value: `${moment(newMember.user.createdAt).format('MMMM Do YYYY')}\n\`${moment(newMember.user.createdAt).fromNow()}\``}
     )
+
+    let instructions = new MessageEmbed()
+    .setAuthor({name: `Welcome ${newMember.user.username}!`, iconURL: newMember.displayAvatarURL()})
+    .setDescription(`Please answer the questions above to gain access to the server! Feel free to ask any questions that you might have ${emojis.ziggs}`)
+    .setFooter({text: })
 
     con.query(`SELECT * FROM visits WHERE user='${newMember.id}'`, function(err, res){
         if(err != null) return console.log(err);
