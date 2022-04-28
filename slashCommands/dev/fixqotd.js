@@ -5,7 +5,7 @@ const settings = require("../../botconfig/settings.json");
 const IC = require('../../botconfig/internalChannels.json');
 const emojis = require('../../botconfig/emojis.json');
 const moment = require("moment");
-const con = require("../../db.js");
+const db = require("quick.db");
 module.exports = {
   name: "fixqotd", //the command name for the Slash Command
   description: "Fixing QOTD issue, caused by some randomness", //the command description for Slash Command Overview
@@ -40,15 +40,15 @@ module.exports = {
 
         let hoursToAdd = options.getInteger("hours");
         let message_id = options.getString("message_id");
-        var now = Date.now();
+        var now = new Date();
 
         let embed = new MessageEmbed()
         .setTitle(`QOTD FIXED (HOPEFULLY)`)
         .setDescription(`WE ARE PRAYING FOR YOU!`);
 
         if(hoursToAdd !== null){
-            let fixedTime = now.addHours(hoursToAdd);
-            db.set(`qotdLAST`, fixedTime)
+            let fixedTime = now.addHours(hoursToAdd)
+            db.set(`qotdLAST`, fixedTime.getTime())
             embed.addField(`HOURS FIXED`, `${moment(fixedTime).format()}`)
         }
 
@@ -65,6 +65,9 @@ module.exports = {
   }
 }
 
+/*
+@Shhroomz
+*/
 Date.prototype.addHours = function(h) {
     this.setTime(this.getTime() + (h*60*60*1000));
     return this;
