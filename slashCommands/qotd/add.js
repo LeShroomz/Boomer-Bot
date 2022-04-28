@@ -45,7 +45,7 @@ module.exports = {
           .setTitle(`NEW QUESTION ADDED`)
           .setDescription(`${questionToBeAdded}`)
           .addField(`ADDED BY`, `${member}`)
-          .setFooter({text: `Question ID: ${res.insertId} | ${emb.footertext}`})
+          .setFooter({text: `${res.insertId ? `Question ID: ${res.insertId}` : `Question ID: unknown`} | ${emb.footertext}`})
 
           interaction.reply({embeds: [logMsg], ephemeral: true});
           logChannel.send({embeds: [logMsg]});
