@@ -43,7 +43,7 @@ module.exports = {
 		let notesToBeAdded = options.getString("notes");
 
         if(notesToBeAdded.length <= 1024){
-            con.query(`INSERT INTO notes (user, note, moderator) VALUES ('${target.user.id}', '${notesToBeAdded}', '${member.user.id}')`, function (err, res, fields){
+            con.query(`INSERT INTO notes (user, note, moderator) VALUES ('${target.user.id}', ?, '${member.user.id}')`, [notesToBeAdded], function (err, res, fields){
             const logMsg = new MessageEmbed()
             .setAuthor({name: `NOTE ADDED`, iconURL: target.displayAvatarURL()})
             .setDescription(`${notesToBeAdded}`)
