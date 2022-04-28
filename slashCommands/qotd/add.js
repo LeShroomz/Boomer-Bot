@@ -40,7 +40,7 @@ module.exports = {
         let logChannel = client.channels.cache.get(IC.logs);
 		    let questionToBeAdded = options.getString("question");
 
-        con.query(`INSERT INTO questions (question, submitter) VALUES ('${questionToBeAdded}', '${member.user.tag}')`, function (err, res, fields){
+        con.query(`INSERT INTO questions (question, submitter) VALUES (?, ?)`, [questionToBeAdded, member.user.tag], function (err, res, fields){
           console.log(err);
           const logMsg = new MessageEmbed()
           .setTitle(`NEW QUESTION ADDED`)
