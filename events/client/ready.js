@@ -16,6 +16,9 @@ module.exports = client => {
       change_status(client);
       ask_question(client)
     }, 15 * 1000);
+    setInterval(()=>{
+      con.query(`SELECT * FROM visits`)
+    }, 10000);
   
   } catch (e){
     console.log(String(e.stack).grey.italic.dim.bgRed)
