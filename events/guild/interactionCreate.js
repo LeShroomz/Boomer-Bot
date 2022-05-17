@@ -3,7 +3,9 @@ const ee = require(`../../botconfig/embed.json`);
 const settings = require(`../../botconfig/settings.json`);
 const { onCoolDown, replacemsg } = require("../../handlers/functions");
 const Discord = require("discord.js");
+const IC = require('../../botconfig/internalChannels.json');
 const emojis = require("../../botconfig/emojis.json");
+const con = require("../../db.js");
 module.exports = (client, interaction) => {
 	const CategoryName = interaction.commandName;
 	let command = false;
@@ -76,46 +78,34 @@ module.exports = (client, interaction) => {
 		command.run(client, interaction, interaction.member, interaction.guild)
 	}
   // DOING BUTTON STUFF!
-  /*
   if(button){
     //console.log(interaction);
-    if(interaction.customId == 'lfg-approve'){
-      let msgUser = interaction.message.embeds[0].footer.text;
+    if(interaction.customId == 'qotd-approve'){
       let oldEmbed = interaction.message.embeds[0];
-      oldEmbed.setFooter(`HANDLED BY ${interaction.member.user.tag}`).setColor("GREEN").setTitle(`LFG REVIEW APPROVED!`)
-      con.query(`UPDATE lfg_messages SET approved='1' WHERE user_id='${msgUser}' AND queue_message='${interaction.message.id}'`);
-      interaction.message.edit({embeds: [oldEmbed], components: []});
-      interaction.reply({content: `${emojis.heart} You have **approved** LFG request successfully!`, ephemeral: true})
+      let questionToBeAdded = oldEmbed.description;
+      let suggester = oldEmbed.fields[0].value.split('`');
+      let logChannel = client.channels.cache.get(IC.logs);
+      //console.log(oldEmbed);
+      //console.log(suggester[1]);
+      con.query(`INSERT INTO questions (question, submitter) VALUES (?, ?)`, [questionToBeAdded, suggester[1]], function (err, res, fields){
+        console.log(err);
+        const logMsg = new Discord.MessageEmbed()
+        .setTitle(`NEW QUESTION ADDED`)
+        .setDescription(`${questionToBeAdded}`)
+        .addFields(
+          {name: `ADDED BY`, value: `${suggester[1]}`, inline: true},
+          {name: `APPROVED BY`, value: `${interaction.member}`, inline: true}
+        )
+        .setFooter({text: `${res.insertId ? `Question ID: ${res.insertId}` : `Question ID: ?`} | ${ee.footertext}`})
 
-      con.query(`SELECT * FROM lfg_messages WHERE user_id='${msgUser}' AND queue_message='${interaction.message.id}'`, function (infoerr, infores){
-        const lfgmsg = new Discord.MessageEmbed()
-          .setTitle(`LOOKING FOR ${infores[0].gamemode}`)
-          .setColor("RANDOM")
-          .setDescription(infores[0].message)
-          .setTimestamp(infores[0].date)
-          .setFooter(ee.footertext)
-          .setThumbnail(oldEmbed.thumbnail.url)
-          .addFields(
-            {name: `Summoner`, value: `${oldEmbed.fields[3].value}`, inline: true},
-            {name: `Discord username`, value: `${infores[0].user_name}`, inline: true}
-          )
-
-        //SENDING TO ALL CHANNELS!
-        con.query(`SELECT * FROM lfg_channels`, function(err, res){
-          for (i = 0; i < res.length; i++){
-            let lfgChannel = client.channels.cache.get(res[i].channel)
-            lfgChannel.send({embeds: [lfgmsg]});
-          }
-        })
-      })
+        interaction.reply({embeds: [logMsg], ephemeral: true});
+        logChannel.send({embeds: [logMsg]});
+        interaction.message.delete();
+      });
     }
-    if(interaction.customId == 'lfg-deny'){
-      let msgUser = interaction.message.embeds[0].footer.text;
-      let oldEmbed = interaction.message.embeds[0];
-      oldEmbed.setFooter(`HANDLED BY ${interaction.member.user.tag}`).setColor("RED").setTitle(`LFG REVIEW DENIED!`)
-      con.query(`DELETE FROM lfg_messages WHERE user_id='${msgUser}' AND queue_message='${interaction.message.id}'`);
-      interaction.message.edit({embeds: [oldEmbed], components: []});
-      interaction.reply({content: `${emojis.no} You have **denied** LFG request successfully!`, ephemeral: true})
+    if(interaction.customId == 'qotd-deny'){
+      interaction.reply({content: `You have **denied** qotd suggestion successfully!`, ephemeral: true});
+      interaction.message.delete();
     }
-  }*/
+  }
 }
