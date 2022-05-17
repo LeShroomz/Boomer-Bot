@@ -4,6 +4,13 @@ const emojis = require("../../botconfig/emojis.json");
 const IC = require("../../botconfig/internalChannels.json");
 
 module.exports = async (client, message) => {
+
+    if(message.channel.id === IC.selfies){
+        if(message.attachments.size > 0){
+            message.startThread({name: `${message.author.username} comments`, autoArchiveDuration: 1440, reason: `Selfie comments`});
+        }
+    }
+
     if(message.channel.type == 'DM'){
         if(!message.author.bot){
             let staffChannel = client.channels.cache.get(IC.adminchat);
