@@ -11,7 +11,7 @@ module.exports = {
   description: "Suggest question to be added to our qotd database", //the command description for Slash Command Overview
   cooldown: 1,
   memberpermissions: [], //Only allow members with specific Permissions to execute a Commmand [OPTIONAL]
-  requiredroles: ['969373293406716024', '969373287413076059', '966653804734971934', '820648593597530142', '875892036270718996'], //Only allow specific Users with a Role to execute a Command [OPTIONAL]
+  requiredroles: ['969373293406716024', '969373287413076059', '966653804734971934', '820648593597530142', '875892036270718996', '801868392679604225'], //Only allow specific Users with a Role to execute a Command [OPTIONAL]
   alloweduserids: [], //Only allow specific Users to execute a Command [OPTIONAL]
   options: [ //OPTIONAL OPTIONS, make the array empty / dont add this option if you don't need options!	
 		//{"User": {name: "user", description: "Who are we direct messaging?", required: true}},

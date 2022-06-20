@@ -49,13 +49,10 @@ module.exports = async (client, message) => {
         let defend = message.guild.members.cache.get('221913832765784064');
         if(content.includes("who is") && message.mentions.has(arny)){
             message.react(emojis.ziggsGif);
-            message.reply({content: `Well ${arny.user.username} is the best person in the world of course? *Psst.. did you know that he secretly loves Pete?* :flushed:`})
+            message.reply({content: `Well ${arny.user.username} is the best person in the world of course?`})
         } else if(content.includes("who is") && message.mentions.has(doctor)){
             message.react(emojis.ziggsGif);
             message.reply({content: `${doctor.user.username} is the most innocent person on the planet, and if you go horni rampage, he will execute you faster than Yone kills Yasuo...`})
-        } else if(content.includes("who is") && message.mentions.has(pete)){
-            message.react(emojis.ziggsGif);
-            message.reply({content: `${pete.user.username} is an interesting one; claims to *hate* ${arny.user.username} but in reality loves him a lot - it is a love/hate relationship, right gurl? Oh yeah who is Pete? Lovable little game-developer-to-be`})
         } else if(content.includes("who is") && message.mentions.has(zach)){
             message.react(emojis.ziggsGif);
             message.reply({content: `Don't step on ${zach.user.username} toes, or you will find yourself sleeping on the couch, outside, in the rain, without clothes.. *and robbed* :sunglasses:`})
